@@ -1,0 +1,6 @@
+{
+  "name": "DAWN Foundation",
+  "description": "A modern, mobile-responsive, and highly polished website redesign for DAWN Foundation, showcasing mission pathways, volunteer applications, partner inquiry, and impact-driven visual storytelling.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
