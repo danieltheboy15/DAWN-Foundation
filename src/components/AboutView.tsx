@@ -123,7 +123,7 @@ export default function AboutView() {
           <div className="lg:col-span-7 lg:order-2 relative">
             <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-brand-green-90s border-4 border-white shadow-xl relative z-10">
               <img
-                src="https://www.dawnfdn.org/_next/image?url=%2Fimages%2Ffounder-3.webp&w=1080&q=75"
+                src="https://res.cloudinary.com/dcxy05pvc/image/upload/v1784641976/IMG_9717.jpg_lzqtfd.jpg"
                 alt="Dr. Aghogho Omene-Iroro"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
