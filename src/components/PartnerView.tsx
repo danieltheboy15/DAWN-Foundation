@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useCMS } from '../lib/cmsStore';
+import { submitToFormEndpoint } from '../config';
 import { Handshake, CheckCircle2, ShieldCheck, ClipboardList, Send, Phone, Mail, Building, Users } from 'lucide-react';
 
 export default function PartnerView() {
@@ -43,18 +44,21 @@ export default function PartnerView() {
     setIsSubmitting(true);
     
     try {
-      await fetch('https://formsubmit.co/ajax/dawnfoundation26@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+      await submitToFormEndpoint(
+        {
+          'Organization Name': formData.orgName,
+          'Partnership Category': formData.orgType,
+          'Primary Contact Name': formData.contactName,
+          'Email Address': formData.email,
+          'Phone Number': formData.phone,
+          'Partnership Goals & Message': formData.message,
+          'Submission Source': 'Website Partnership & Sponsorship Form'
         },
-        body: JSON.stringify({
-          ...formData,
-          formType: 'Partnership Inquiry',
-          _subject: `DAWN Foundation: New Partnership Inquiry from ${formData.orgName} (${formData.contactName})`
-        })
-      });
+        {
+          subject: `DAWN Foundation: New Partnership Inquiry from ${formData.orgName} (${formData.contactName})`,
+          replyTo: formData.email
+        }
+      );
 
       setIsSubmitSuccess(true);
       // Reset form variables

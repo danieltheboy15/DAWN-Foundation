@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Mail, Phone, User, CheckCircle } from 'lucide-react';
+import { submitToFormEndpoint } from '../config';
 
 interface NewsletterPopupProps {
   delayMs?: number;
@@ -47,18 +48,20 @@ export default function NewsletterPopup({ delayMs = 7000 }: NewsletterPopupProps
     setIsSubmitting(true);
 
     try {
-      await fetch('https://formsubmit.co/ajax/dawnfoundation26@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+      await submitToFormEndpoint(
+        {
+          'First Name': formData.firstName,
+          'Last Name': formData.lastName,
+          'Phone Number': formData.phone,
+          'Email Address': formData.email,
+          'Inquiry / Registration Type': 'Keep In Touch & Upcoming Events Pop-up',
+          'Submission Source': 'Website Visitor Welcome Pop-up'
         },
-        body: JSON.stringify({
-          ...formData,
-          formType: 'Newsletter & Events Sign-up',
-          _subject: `DAWN Foundation: New Events Keep-in-Touch Registration from ${formData.firstName} ${formData.lastName}`
-        })
-      });
+        {
+          subject: `DAWN Foundation: New Events Keep-in-Touch Registration from ${formData.firstName} ${formData.lastName}`,
+          replyTo: formData.email
+        }
+      );
 
       setIsSuccess(true);
     } catch (err) {

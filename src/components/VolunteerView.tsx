@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useCMS } from '../lib/cmsStore';
+import { submitToFormEndpoint } from '../config';
 import { GraduationCap, HeartPulse, Soup, Video, ClipboardList, CheckCircle, Mail, Phone, User, Send, Calendar } from 'lucide-react';
 
 export default function VolunteerView() {
@@ -47,19 +48,22 @@ export default function VolunteerView() {
     setIsSubmitting(true);
     
     try {
-      await fetch('https://formsubmit.co/ajax/dawnfoundation26@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+      await submitToFormEndpoint(
+        {
+          'First Name': formData.firstName,
+          'Last Name': formData.lastName,
+          'Email': formData.email,
+          'Phone': formData.phone,
+          'Role Category Applied For': selectedRoleForForm,
+          'Availability Schedule': formData.availability,
+          'Relevant Skills & Experience': formData.experience,
+          'Submission Source': 'Website Volunteer Application Form'
         },
-        body: JSON.stringify({
-          ...formData,
-          selectedRole: selectedRoleForForm,
-          formType: 'Volunteer Application',
-          _subject: `DAWN Foundation: New Volunteer Application from ${formData.firstName} ${formData.lastName} (${selectedRoleForForm})`
-        })
-      });
+        {
+          subject: `DAWN Foundation: New Volunteer Application from ${formData.firstName} ${formData.lastName} (${selectedRoleForForm})`,
+          replyTo: formData.email
+        }
+      );
 
       setIsSubmitSuccess(true);
       // Reset form variables

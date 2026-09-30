@@ -7,6 +7,7 @@ import {
   Laptop, Droplets, Gift
 } from 'lucide-react';
 import { useCMS } from '../lib/cmsStore';
+import { submitToFormEndpoint } from '../config';
 
 interface HomeViewProps {
   setCurrentTab: (tab: string) => void;
@@ -40,18 +41,20 @@ export default function HomeView({ setCurrentTab }: HomeViewProps) {
     e.preventDefault();
     setIsWelfareSubmitting(true);
     try {
-      await fetch('https://formsubmit.co/ajax/dawnfoundation26@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+      await submitToFormEndpoint(
+        {
+          'Full Name': welfareData.name,
+          'Contact (Email or Phone)': welfareData.contact,
+          'Assistance Pillar': welfareData.category === 'scholarship' ? 'Education' : welfareData.category === 'medical' ? 'Healthcare' : 'Food Security',
+          'Country / Region': welfareData.country === 'US' ? 'United States' : 'Nigeria',
+          'Needs Description / Message': welfareData.notes,
+          'Submission Source': 'Website Home Welfare Inquiry Form'
         },
-        body: JSON.stringify({
-          ...welfareData,
-          formType: 'Home Welfare Inquiry',
-          _subject: `DAWN Foundation: New Welfare Inquiry from ${welfareData.name}`
-        })
-      });
+        {
+          subject: `DAWN Foundation: New Welfare Inquiry from ${welfareData.name}`,
+          replyTo: welfareData.contact.includes('@') ? welfareData.contact.trim() : undefined
+        }
+      );
       setIsWelfareSuccess(true);
       setWelfareData({
         name: '',
