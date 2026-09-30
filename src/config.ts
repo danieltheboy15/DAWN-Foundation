@@ -2,7 +2,7 @@
  * Application Configuration & Form Integration Constants
  */
 
-export const FORM_SUBMISSION_EMAIL = 'fatunsed@gmail.com';
+export const FORM_SUBMISSION_EMAIL = 'info@dawnfdn.org';
 export const SHIPMYFORM_ENDPOINT = `https://shipmyform.com/to/${FORM_SUBMISSION_EMAIL}`;
 export const FORMSUBMIT_ENDPOINT = `https://formsubmit.co/ajax/${FORM_SUBMISSION_EMAIL}`;
 
