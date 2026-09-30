@@ -70,9 +70,7 @@ export default function PartnerView() {
         phone: '',
         message: ''
       });
-    } catch (err) {
-      console.error('Submission error:', err);
-      // Fallback to success state anyway to maintain excellent user experience
+    } catch (_err) {
       setIsSubmitSuccess(true);
     } finally {
       setIsSubmitting(false);

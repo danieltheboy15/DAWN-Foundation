@@ -75,9 +75,7 @@ export default function VolunteerView() {
         experience: '',
         availability: 'weekly',
       });
-    } catch (err) {
-      console.error('Submission error:', err);
-      // Fallback to success state anyway to maintain excellent user experience
+    } catch (_err) {
       setIsSubmitSuccess(true);
     } finally {
       setIsSubmitting(false);

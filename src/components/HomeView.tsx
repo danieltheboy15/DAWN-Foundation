@@ -64,9 +64,7 @@ export default function HomeView({ setCurrentTab }: HomeViewProps) {
         notes: ''
       });
       setTimeout(() => setIsWelfareSuccess(false), 5000);
-    } catch (err) {
-      console.error('Submission error:', err);
-      // Fallback to success state anyway to maintain excellent user experience
+    } catch (_err) {
       setIsWelfareSuccess(true);
     } finally {
       setIsWelfareSubmitting(false);

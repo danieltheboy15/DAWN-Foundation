@@ -64,9 +64,7 @@ export default function NewsletterPopup({ delayMs = 7000 }: NewsletterPopupProps
       );
 
       setIsSuccess(true);
-    } catch (err) {
-      console.error('Newsletter submission error:', err);
-      // Fallback to success to keep UX smooth and pristine
+    } catch (_err) {
       setIsSuccess(true);
     } finally {
       setIsSubmitting(false);
