@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomeView from './components/HomeView';
@@ -97,6 +98,9 @@ function AppContent() {
       
       {/* 7-second Events Subscription Newsletter Popup */}
       <NewsletterPopup />
+      
+      {/* Vercel Web Analytics */}
+      <Analytics />
       
     </div>
   );
