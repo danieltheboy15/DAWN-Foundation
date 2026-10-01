@@ -19,16 +19,16 @@ export default function NewsletterPopup({ delayMs = 7000 }: NewsletterPopupProps
   });
 
   useEffect(() => {
-    // Only display once per browser session
-    const hasSeenPopup = sessionStorage.getItem('dawn_has_seen_newsletter_popup');
-    if (!hasSeenPopup) {
-      const timer = setTimeout(() => {
-        setIsOpen(true);
-        sessionStorage.setItem('dawn_has_seen_newsletter_popup', 'true');
-      }, delayMs);
+    // Clear any previous session suppression so the popup reliably appears for the user
+    try {
+      sessionStorage.removeItem('dawn_has_seen_newsletter_popup');
+    } catch (_e) {}
 
-      return () => clearTimeout(timer);
-    }
+    const timer = setTimeout(() => {
+      setIsOpen(true);
+    }, delayMs);
+
+    return () => clearTimeout(timer);
   }, [delayMs]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,14 +74,14 @@ export default function NewsletterPopup({ delayMs = 7000 }: NewsletterPopupProps
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
           {/* Backdrop overlay */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={handleClose}
-            className="absolute inset-0 bg-brand-green-950/70 backdrop-blur-xs"
+            className="fixed inset-0 bg-brand-green-950/75 backdrop-blur-xs cursor-pointer"
           />
 
           {/* Modal Container */}
@@ -90,7 +90,7 @@ export default function NewsletterPopup({ delayMs = 7000 }: NewsletterPopupProps
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.95, y: 20, opacity: 0 }}
             transition={{ type: 'spring', duration: 0.5 }}
-            className="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-brand-green-100 overflow-hidden relative z-10 p-6 sm:p-8"
+            className="bg-white w-full max-w-lg rounded-3xl shadow-2xl border border-brand-green-100 overflow-hidden relative z-10 p-6 sm:p-8 my-auto"
           >
             {/* Close button */}
             <button
